@@ -35,22 +35,7 @@ contract PrivateVariables {
     // slot 9
     mapping(uint => StructValues) private structMappedValues;
 
-    constructor() {
-        u80 = 3;
-        u256 = 6;
-
-        flag = true;
-        addr = msg.sender;
-
-        dynamicArray.push(4);
-        staticArray[0] = address(1);
-
-        staticArray[1] = address(2);
-        staticArray[2] = address(3);
-
-        mappedValues[0] = address(4);
-        b32 = keccak256("_greeting");
-    }
+    constructor() {}
 
     function updateFlag(bool value) external {
         flag = value;
@@ -77,10 +62,10 @@ contract PrivateVariables {
         dynamicArray.push(value);
     }
 
-    function updateStaticArray(uint[3] calldata value) external {
-        dynamicArray[0] = value[0];
-        dynamicArray[1] = value[1];
-        dynamicArray[2] = value[2];
+    function updateStaticArray(address[3] calldata value) external {
+        staticArray[0] = value[0];
+        staticArray[1] = value[1];
+        staticArray[2] = value[2];
     }
 
     function updateMapping(uint key, address value) external {
