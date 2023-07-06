@@ -29,9 +29,9 @@ contract PrivateVariables {
     // slot 6
     uint256[] private dynamicArray;
     // slot 7
-    StructValues[] private structArrayValues;
-    // slot 8
     mapping(uint => address) private mappedValues;
+    // slot 8
+    StructValues[] private structDynamicArrayValues;
     // slot 9
     mapping(uint => StructValues) private structMappedValues;
 
@@ -89,7 +89,7 @@ contract PrivateVariables {
             id: ui256
         });
 
-        structArrayValues.push(structValues);
+        structDynamicArrayValues.push(structValues);
         structMappedValues[u96] = structValues;
     }
 
