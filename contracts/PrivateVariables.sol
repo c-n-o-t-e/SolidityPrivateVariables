@@ -1,9 +1,21 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.18;
 
 error PrivateVariables_Invalid_Address();
 
 contract PrivateVariables {
+    struct StructValues {
+        // one slot
+        uint96 u96;
+        address structAddr;
+        // one slot
+        address structAddr0;
+        bytes4 b4;
+        bytes8 b8;
+        // one slot
+        uint256 id;
+    }
+
     // slot 0
     address public addr; // 20 bytes
     uint80 private u80; // 10 bytes
@@ -17,7 +29,11 @@ contract PrivateVariables {
     // slot 6
     uint256[] private dynamicArray;
     // slot 7
+    StructValues[] private structArrayValues;
+    // slot 8
     mapping(uint => address) private mappedValues;
+    // slot 9
+    mapping(uint => StructValues) private structMappedValues;
 
     constructor() {
         u80 = 3;
@@ -36,39 +52,60 @@ contract PrivateVariables {
         b32 = keccak256("_greeting");
     }
 
-    function updateFlag(bool _value) external {
-        flag = _value;
+    function updateFlag(bool value) external {
+        flag = value;
     }
 
-    function updateU80(uint80 _value) external {
-        u80 = _value;
+    function updateU80(uint80 value) external {
+        u80 = value;
     }
 
-    function updateU256(uint256 _value) external {
-        u256 = _value;
+    function updateU256(uint256 value) external {
+        u256 = value;
     }
 
-    function updateBytes32(bytes32 _value) external {
-        b32 = _value;
+    function updateBytes32(bytes32 value) external {
+        b32 = value;
     }
 
-    function updateAddress(address _value) external {
-        if (_value == address(0)) revert PrivateVariables_Invalid_Address();
-        addr = _value;
+    function updateAddress(address value) external {
+        if (value == address(0)) revert PrivateVariables_Invalid_Address();
+        addr = value;
     }
 
-    function updateDynamicArray(uint _value) external {
-        dynamicArray.push(_value);
+    function updateDynamicArray(uint value) external {
+        dynamicArray.push(value);
     }
 
-    function updateStaticArray(uint[3] calldata _value) external {
-        dynamicArray[0] = _value[0];
-        dynamicArray[1] = _value[1];
-        dynamicArray[2] = _value[2];
+    function updateStaticArray(uint[3] calldata value) external {
+        dynamicArray[0] = value[0];
+        dynamicArray[1] = value[1];
+        dynamicArray[2] = value[2];
     }
 
-    function updateMapping(uint _key, address _value) external {
-        mappedValues[_key] = _value;
+    function updateMapping(uint key, address value) external {
+        mappedValues[key] = value;
+    }
+
+    function updateStructValues(
+        uint96 u96,
+        address structAddr,
+        address structAddr0,
+        bytes4 b4,
+        bytes8 b8,
+        uint256 ui256
+    ) public {
+        StructValues memory structValues = StructValues({
+            u96: u96,
+            structAddr: structAddr,
+            structAddr0: structAddr0,
+            b4: b4,
+            b8: b8,
+            id: ui256
+        });
+
+        structArrayValues.push(structValues);
+        structMappedValues[u96] = structValues;
     }
 
     function getArrayLocation(
