@@ -95,10 +95,9 @@ contract PrivateVariables {
 
     function getArrayLocation(
         uint slot,
-        uint index,
-        uint elementSize
+        uint index
     ) public pure returns (uint) {
-        return uint(keccak256(abi.encodePacked(slot))) + (index * elementSize);
+        return uint(keccak256(abi.encodePacked(slot))) + index;
     }
 
     function getMapLocation(uint slot, uint key) public pure returns (uint) {
