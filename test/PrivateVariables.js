@@ -306,9 +306,8 @@ describe("PrivateVariables", function () {
     const result = mapLocation0.add(1);
     const result0 = mapLocation0.add(2);
 
-    // Convert the result back to bytes32
     const resultBytes32 = ethers.utils.hexlify(result);
-    const resultBytes320 = ethers.utils.hexlify(result0);
+    const resultBytes32_0 = ethers.utils.hexlify(result0);
 
     const hexValue0 = ethers.utils.hexValue(BigNumber.from(mapLocation0));
 
@@ -324,7 +323,7 @@ describe("PrivateVariables", function () {
 
     const storageValue2 = await ethers.provider.getStorageAt(
       privateVariables.address,
-      resultBytes320
+      resultBytes32_0
     );
 
     const u96_ = ethers.utils.hexDataSlice(storageValue0, 20, 32);
