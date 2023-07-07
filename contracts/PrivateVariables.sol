@@ -17,7 +17,7 @@ contract PrivateVariables {
     }
 
     // slot 0
-    address public addr; // 20 bytes
+    address private addr; // 20 bytes
     uint80 private u80; // 10 bytes
     bool flag; // 1  bytes
     // slot 1
