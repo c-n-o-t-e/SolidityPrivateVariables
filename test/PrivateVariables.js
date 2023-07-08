@@ -77,7 +77,7 @@ describe("PrivateVariables", function () {
   });
 
   it("Should return packed variables from slot 0", async function () {
-    const storageValue = await StorageValue(0);
+    const storageValue = await getStorageValue(0);
 
     const address = ethers.utils.hexDataSlice(storageValue, 12, 32);
     const u80_ = ethers.utils.hexDataSlice(storageValue, 2, 12);
@@ -93,20 +93,20 @@ describe("PrivateVariables", function () {
   });
 
   it("Should return variable from slot 1", async function () {
-    const storageValue = await StorageValue(1);
+    const storageValue = await getStorageValue(1);
 
     assert.equal(storageValue, hashedString);
   });
 
   it("Should return variable from slot 2", async function () {
-    const storageValue = await StorageValue(2);
+    const storageValue = await getStorageValue(2);
 
     const convertedBytes = BigNumber.from(storageValue);
     assert.equal(convertedBytes, u256);
   });
 
   it("Should return variable from slot 3", async function () {
-    const storageValue = await StorageValue(3);
+    const storageValue = await getStorageValue(3);
 
     assert.equal(
       deployer.address,
@@ -115,7 +115,7 @@ describe("PrivateVariables", function () {
   });
 
   it("Should return variable from slot 4", async function () {
-    const storageValue = await StorageValue(4);
+    const storageValue = await getStorageValue(4);
 
     assert.equal(
       user.address,
@@ -124,7 +124,7 @@ describe("PrivateVariables", function () {
   });
 
   it("Should return variable from slot 5", async function () {
-    const storageValue = await StorageValue(5);
+    const storageValue = await getStorageValue(5);
 
     assert.equal(
       user1.address,
@@ -142,16 +142,16 @@ describe("PrivateVariables", function () {
     const hexValue0 = ethers.utils.hexValue(BigNumber.from(arrayLocation0));
     const hexValue1 = ethers.utils.hexValue(BigNumber.from(arrayLocation1));
 
-    const storageValue0 = await StorageValue(hexValue0);
+    const storageValue0 = await getStorageValue(hexValue0);
 
-    const storageValue1 = await StorageValue(hexValue1);
+    const storageValue1 = await getStorageValue(hexValue1);
 
     // using ether js to achieve the entire process
     const slot = ethers.utils.keccak256(
       ethers.utils.defaultAbiCoder.encode(["uint"], [6])
     );
 
-    const storageValue2 = await StorageValue(slot);
+    const storageValue2 = await getStorageValue(slot);
 
     const bigNumberValue = BigNumber.from(slot);
 
@@ -161,7 +161,7 @@ describe("PrivateVariables", function () {
     // Convert the result back to bytes32
     const resultBytes32 = ethers.utils.hexlify(result);
 
-    const storageValue3 = await StorageValue(resultBytes32);
+    const storageValue3 = await getStorageValue(resultBytes32);
 
     assert.equal(value, BigNumber.from(storageValue0));
     assert.equal(value * 2, BigNumber.from(storageValue1));
@@ -180,8 +180,8 @@ describe("PrivateVariables", function () {
     const hexValue0 = ethers.utils.hexValue(BigNumber.from(mapLocation0));
     const hexValue1 = ethers.utils.hexValue(BigNumber.from(mapLocation1));
 
-    const storageValue0 = await StorageValue(hexValue0);
-    const storageValue1 = await StorageValue(hexValue1);
+    const storageValue0 = await getStorageValue(hexValue0);
+    const storageValue1 = await getStorageValue(hexValue1);
 
     // using ether js to achieve the entire process
 
@@ -193,9 +193,9 @@ describe("PrivateVariables", function () {
       ethers.utils.defaultAbiCoder.encode(["uint", "uint"], [1, 7])
     );
 
-    const storageValue2 = await StorageValue(slot);
+    const storageValue2 = await getStorageValue(slot);
 
-    const storageValue3 = await StorageValue(slot0);
+    const storageValue3 = await getStorageValue(slot0);
 
     assert.equal(
       deployer.address,
@@ -227,11 +227,11 @@ describe("PrivateVariables", function () {
     const hexValue1 = ethers.utils.hexValue(BigNumber.from(arrayLocation1));
     const hexValue2 = ethers.utils.hexValue(BigNumber.from(arrayLocation2));
 
-    const storageValue0 = await StorageValue(hexValue0);
+    const storageValue0 = await getStorageValue(hexValue0);
 
-    const storageValue1 = await StorageValue(hexValue1);
+    const storageValue1 = await getStorageValue(hexValue1);
 
-    const storageValue2 = await StorageValue(hexValue2);
+    const storageValue2 = await getStorageValue(hexValue2);
 
     const u96_ = ethers.utils.hexDataSlice(storageValue0, 20, 32);
     const structAddr = ethers.utils.hexDataSlice(storageValue0, 0, 20);
@@ -260,11 +260,11 @@ describe("PrivateVariables", function () {
 
     const hexValue0 = ethers.utils.hexValue(BigNumber.from(mapLocation0));
 
-    const storageValue0 = await StorageValue(hexValue0);
+    const storageValue0 = await getStorageValue(hexValue0);
 
-    const storageValue1 = await StorageValue(resultBytes32);
+    const storageValue1 = await getStorageValue(resultBytes32);
 
-    const storageValue2 = await StorageValue(resultBytes32_0);
+    const storageValue2 = await getStorageValue(resultBytes32_0);
 
     const u96_ = ethers.utils.hexDataSlice(storageValue0, 20, 32);
     const structAddr = ethers.utils.hexDataSlice(storageValue0, 0, 20);
@@ -283,7 +283,7 @@ describe("PrivateVariables", function () {
     assert.equal(BigNumber.from(storageValue2), ui256);
   });
 
-  async function StorageValue(slot) {
+  async function getStorageValue(slot) {
     return await ethers.provider.getStorageAt(privateVariables.address, slot);
   }
 });
