@@ -94,7 +94,6 @@ describe("PrivateVariables", function () {
 
   it("Should return variable from slot 1", async function () {
     const storageValue = await getStorageValue(1);
-
     assert.equal(storageValue, hashedString);
   });
 
@@ -143,7 +142,6 @@ describe("PrivateVariables", function () {
     const hexValue1 = ethers.utils.hexValue(BigNumber.from(arrayLocation1));
 
     const storageValue0 = await getStorageValue(hexValue0);
-
     const storageValue1 = await getStorageValue(hexValue1);
 
     // using ether js to achieve the entire process
@@ -152,15 +150,10 @@ describe("PrivateVariables", function () {
     );
 
     const storageValue2 = await getStorageValue(slot);
-
     const bigNumberValue = BigNumber.from(slot);
 
-    // Add 1 to the BigNumber
     const result = bigNumberValue.add(1);
-
-    // Convert the result back to bytes32
     const resultBytes32 = ethers.utils.hexlify(result);
-
     const storageValue3 = await getStorageValue(resultBytes32);
 
     assert.equal(value, BigNumber.from(storageValue0));
@@ -194,7 +187,6 @@ describe("PrivateVariables", function () {
     );
 
     const storageValue2 = await getStorageValue(slot);
-
     const storageValue3 = await getStorageValue(slot0);
 
     assert.equal(
@@ -228,15 +220,14 @@ describe("PrivateVariables", function () {
     const hexValue2 = ethers.utils.hexValue(BigNumber.from(arrayLocation2));
 
     const storageValue0 = await getStorageValue(hexValue0);
-
     const storageValue1 = await getStorageValue(hexValue1);
 
     const storageValue2 = await getStorageValue(hexValue2);
-
     const u96_ = ethers.utils.hexDataSlice(storageValue0, 20, 32);
-    const structAddr = ethers.utils.hexDataSlice(storageValue0, 0, 20);
 
+    const structAddr = ethers.utils.hexDataSlice(storageValue0, 0, 20);
     const b8 = ethers.utils.hexDataSlice(storageValue1, 0, 8);
+
     const b4 = ethers.utils.hexDataSlice(storageValue1, 8, 12);
     const structAddr0 = ethers.utils.hexDataSlice(storageValue1, 12, 32);
 
@@ -259,11 +250,9 @@ describe("PrivateVariables", function () {
     const resultBytes32_0 = ethers.utils.hexlify(result0);
 
     const hexValue0 = ethers.utils.hexValue(BigNumber.from(mapLocation0));
-
     const storageValue0 = await getStorageValue(hexValue0);
 
     const storageValue1 = await getStorageValue(resultBytes32);
-
     const storageValue2 = await getStorageValue(resultBytes32_0);
 
     const u96_ = ethers.utils.hexDataSlice(storageValue0, 20, 32);
